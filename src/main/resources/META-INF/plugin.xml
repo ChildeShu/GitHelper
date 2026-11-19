@@ -1,0 +1,77 @@
+<idea-plugin>
+    <name>Git Helper</name>
+    <id>com.childeshu.githelper</id>
+    <!-- Additional Info：供应商主页 / 支持邮箱，发布后由 Marketplace 附加信息区展示 -->
+    <vendor email="jiansite@qq.com" url="https://user.qzone.qq.com/1340582309/infocenter">锦舒</vendor>
+    <idea-version since-build="241" until-build="243.*"/>
+    <depends>com.intellij.modules.platform</depends>
+    <extensions defaultExtensionNs="com.intellij">
+        <notificationGroup id="GitHelper" displayType="BALLOON"/>
+        <toolWindow id="Git 助手"
+                    anchor="left"
+                    icon="/icons/gitHelper.svg"
+                    factoryClass="com.childeshu.githelper.GitHelperToolWindowFactory"/>
+    </extensions>
+    <description>
+        Batch select multiple Git repositories under a workspace root, then switch them to a
+        target branch or create a new branch based on a source branch. Local uncommitted
+        changes are preserved and remote branches are force-synced before switching.
+        &lt;br/&gt;
+        批量选择工作区下多个 Git 仓库，执行：&lt;br/&gt;
+        1. 切换到指定分支：以远程代码为准强制同步后，再把本地改动文件覆盖回去&lt;br/&gt;
+        2. 基于源分支新建目标分支：先同步源分支远程代码，再新建分支并覆盖本地改动
+        &lt;br /&gt;
+        &lt;br/&gt;
+        Welcome to reward.
+        &lt;br /&gt;
+        &lt;a title="Welcome to reward."
+        href="https://user.qzone.qq.com/1340582309/infocenter"&gt;
+        &lt;img border="0"
+        src="https://raw.githubusercontent.com/ChildeShu/GitHelper/main/assets/qr.png"
+        width="196" height="196"&gt;
+        &lt;/a&gt;
+        &lt;br/&gt;
+        &lt;b&gt;Feedback &amp; Reviews&lt;/b&gt;&lt;br/&gt;
+        Found a bug or have an idea? Please leave a review on the JetBrains Marketplace plugin page.
+        Your feedback decides what ships next.&lt;br/&gt;
+        遇到问题或有功能建议，欢迎在 Marketplace 插件页留下评价。&lt;br/&gt;
+        &lt;br/&gt;
+        &lt;b&gt;Additional Information&lt;/b&gt;&lt;br/&gt;
+        Plugin ID: com.childeshu.githelper&lt;br/&gt;
+        Requires: Git command line available in PATH&lt;br/&gt;
+        Compatible with: IntelliJ IDEA 2024.1 - 2024.3 (build 241 - 243.*)&lt;br/&gt;
+        Local backup: ~/.git-helper-backup/&lt;timestamp&gt; (created for each switch / create)&lt;br/&gt;
+    </description>
+
+    <!-- What's New：IDEA 插件详情页与 Marketplace 版本说明均读取此节点 -->
+    <change-notes><![CDATA[
+        <b>1.0.0</b> (2026-11-18) - Initial release / 首个版本
+        <ul>
+            <li>Batch switch / create branches across multiple Git repositories under one workspace root.
+                工作区下多仓库批量切换分支、基于源分支批量新建分支。</li>
+            <li>Local uncommitted changes are preserved: tracked modifications are backed up before
+                switching and restored afterwards. 切换前备份本地改动，切换后自动还原。</li>
+            <li>One-click "Sync from Remote" (fetch --prune + rebase) and "Push to Remote".
+                支持批量同步远程、批量推送。</li>
+            <li>Optional parallel execution (1 - 32 repos) with progress and per-repository logs.
+                可选多进程并行，带进度展示与分仓库日志。</li>
+            <li>Safer Git calls: 45s timeout, non-interactive credentials, UTF-8 output for
+                non-ASCII branch names. Git 命令超时保护、禁用凭据弹窗、UTF-8 输出避免中文分支名乱码。</li>
+            <li>Entry points: Tools menu, main toolbar, navigation bar and the "Git 助手" tool window.
+                支持 Tools 菜单、主工具栏、导航栏与左侧工具窗口入口。</li>
+        </ul>
+    ]]></change-notes>
+    <actions>
+        <action id="com.childeshu.githelper.GitHelperAction"
+                class="com.childeshu.githelper.GitHelperAction"
+                icon="/icons/gitHelper.svg"
+                text="Git 助手"
+                description="批量选择项目，切换到指定分支或基于源分支新建分支，并强制同步远程">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+            <add-to-group group-id="MainToolbarLeft" anchor="last"/>
+            <add-to-group group-id="MainToolbarRight" anchor="last"/>
+            <!-- New UI 右上角工具栏：点击图标直接弹对话框，无工具窗口、无闪烁 -->
+            <add-to-group group-id="NavBarToolBar" anchor="last"/>
+        </action>
+    </actions>
+</idea-plugin>
