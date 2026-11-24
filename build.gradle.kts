@@ -47,6 +47,7 @@ intellijPlatform {
             // 与构建平台 2024.1（241）保持一致，避免 verifyPluginProjectConfiguration
             // 报 "since-build is lower than the target IntelliJ Platform major version"
             sinceBuild = "241"
+            untilBuild = null
         }
     }
     // 插件没有自定义 Settings，跳过 searchable options 任务，
